@@ -1,0 +1,27 @@
+[project]
+name = "arabic-dialect-identification-v2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "ar3935_openuni", email = "ar3935@open.ac.uk" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "huggingface-hub>=2.4.0",
+    "pandas>=3.1.1",
+    "pydantic>=2.14.3",
+    "tokenizers>=0.23.3",
+]
+
+[project.scripts]
+arabic-dialect-identification-v2 = "arabic_dialect_identification_v2:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "dvc>=3.67.1",
+]

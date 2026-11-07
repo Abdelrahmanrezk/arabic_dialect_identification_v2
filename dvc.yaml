@@ -1,0 +1,15 @@
+stages:
+  prepare:
+    desc: Clean QADI tweets, drop empty/duplicate/overlapping rows, save Parquet and a report.
+    cmd: uv run python -m arabic_dialect_identification_v2.data.prepare --config config/data_preprocessing.yaml --overwrite
+    deps:
+      - data/raw
+      - src/arabic_dialect_identification_v2/data
+      - uv.lock
+    params:
+      - config/data_preprocessing.yaml:
+    outs:
+      - data/processed/train.parquet
+      - data/processed/evaluate.parquet
+    metrics:
+      - data/processed/preparation_report.json

@@ -1,0 +1,62 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: uv run python -m arabic_dialect_identification_v2.data.prepare --config
+      config/data_preprocessing.yaml --overwrite
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 9a3145456b5e04e7f5e4cc35e59a19b1.dir
+      size: 81126399
+      nfiles: 2
+    - path: src/arabic_dialect_identification_v2/data
+      hash: md5
+      md5: eff7f30bce64511f83f07a23069229b6.dir
+      size: 112972
+      nfiles: 16
+    - path: uv.lock
+      hash: md5
+      md5: 8bb53a29371b20e695f405410421185e
+      size: 744270
+    params:
+      config/data_preprocessing.yaml:
+        cleaning:
+          placeholders:
+          - حسابشخصي
+          - حسابشخصى
+          - رابطويب
+          max_letter_repeats: 2
+          max_symbol_repeats: 1
+          protected_word_fragment: لله
+        output:
+          directory: data/processed
+          train_file_name: train.parquet
+          evaluate_file_name: evaluate.parquet
+          report_file_name: preparation_report.json
+        row_policy:
+          drop_empty_texts: true
+          drop_duplicate_texts: true
+          drop_train_evaluate_overlap: true
+        source:
+          train_path: data/raw/train/strat_train_set_excel.csv
+          evaluate_path: data/raw/evaluate/strat_test_set_excel.csv
+          encoding: utf-8-sig
+          expected_columns:
+          - id
+          - dialect
+          - dialect_l_encoded
+          - text
+          text_column: text
+    outs:
+    - path: data/processed/evaluate.parquet
+      hash: md5
+      md5: 9b509e626934188284f3d1eb4c68899f
+      size: 822884
+    - path: data/processed/preparation_report.json
+      hash: md5
+      md5: e3c2f87027ff6f33d72a57b8edcee4cd
+      size: 2725
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: f6aa9677125cfa925b9635ef7d446e3e
+      size: 39070616

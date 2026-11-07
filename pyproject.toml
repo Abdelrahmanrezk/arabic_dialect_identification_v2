@@ -26,5 +26,27 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "dvc>=3.67.1",
+    "ipykernel>=7.4.0",
+    "mypy>=2.4.1",
+    "pandas-stubs>=3.1.0.261029",
     "pytest>=9.2.0",
+    "ruff>=0.17.4",
+    "types-pyyaml>=6.0.12.20261103",
 ]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+# E/W style, F bugs, B likely bugs, I import order, SIM simplifications, N naming, UP modern syntax, RUF ruff-specific
+select = ["E", "F", "W", "B", "I", "SIM", "N", "UP", "RUF"]
+# RUF001-003 flag Arabic letters as "ambiguous characters"; that is expected in an Arabic NLP project.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src"]

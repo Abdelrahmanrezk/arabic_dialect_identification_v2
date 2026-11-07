@@ -1,0 +1,26 @@
+# Settings for the data-preparation step.
+# Paths are relative to the repository root; run commands from there.
+
+source:
+  train_path: data/raw/train/strat_train_set_excel.csv
+  evaluate_path: data/raw/evaluate/strat_test_set_excel.csv
+  encoding: utf-8-sig
+  expected_columns: [id, dialect, dialect_l_encoded, text]
+  text_column: text
+
+output:
+  directory: data/processed
+  train_file_name: train.parquet
+  evaluate_file_name: evaluate.parquet
+  report_file_name: preparation_report.json
+
+cleaning:
+  placeholders: [حسابشخصي, حسابشخصى, رابطويب]
+  max_letter_repeats: 2
+  max_symbol_repeats: 1
+  protected_word_fragment: لله
+
+row_policy:
+  drop_empty_texts: true
+  drop_duplicate_texts: true
+  drop_train_evaluate_overlap: true
